@@ -10,7 +10,8 @@ import static com.codeborne.selenide.Selenide.*;
 public class GitHubWikiTest {
     @BeforeAll
     static void setupConfig() {
-        Configuration.browserSize = "1920x1080";
+        Configuration.browser = "chrome";
+//        Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
         Configuration.timeout = 5000; // default 4000
     }
@@ -24,7 +25,16 @@ public class GitHubWikiTest {
         //Убедитесь, что в списке страниц (Pages) есть страница SoftAssertions
         $("#wiki-content").shouldHave(text("Soft assertions"));
         $("#wiki-content").$(byText("Soft assertions")).click();
-        $(byTagAndText("h4","3. Using JUnit5 extend test class:")).shouldBe(visible);
-
+        $("#wiki-body").shouldHave(text("@ExtendWith({SoftAssertsExtension.class})\n" +
+                "class Tests {\n" +
+                "  @Test\n" +
+                "  void test() {\n" +
+                "    Configuration.assertionMode = SOFT;\n" +
+                "    open(\"page.html\");\n" +
+                "\n" +
+                "    $(\"#first\").should(visible).click();\n" +
+                "    $(\"#second\").should(visible).click();\n" +
+                "  }\n" +
+                "}"));
     }
 }
