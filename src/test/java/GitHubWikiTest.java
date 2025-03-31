@@ -19,7 +19,6 @@ public class GitHubWikiTest {
     void checkSoftAssertionsPage() {
         // Открыть страницу репозитория Selenide
         open("https://github.com/selenide/selenide");
-
         // Перейти в раздел Wiki проекта
         $(("#wiki-tab")).click();
         //Убедитесь, что в списке страниц (Pages) есть страница SoftAssertions
